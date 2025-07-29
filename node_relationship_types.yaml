@@ -79,7 +79,7 @@ relationship_types:
         required: true
         description: Explicitly stated resource requirements for this deployment. If stated the infrastructure can schedule an entity accordingly.
         default: unstated
-    valid_capability_types: [ Compute ]
+    valid_capability_types: [ cna-modeling.capabilities.Host ]
     valid_target_node_types: [ cna-modeling.entities.Infrastructure ]
 
   cna-modeling.relationships.Provides.Endpoint:
