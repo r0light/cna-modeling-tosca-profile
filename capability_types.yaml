@@ -1,0 +1,48 @@
+tosca_definitions_version: tosca_2_0
+    
+metadata:
+  template_name: capability_types.yaml
+  template_author: Distributed Systems Group
+  template_version: 0.6
+
+description: >-
+  This TOSCA definitions document contains the CNA Modeling capability types.
+
+capability_types:
+
+  cna-modeling.capabilities.Endpoint:
+    description: >-
+      The Endpoint capability enables specifying a relationship to an endpoint.
+
+  cna-modeling.capabilities.Host:
+    description: >-
+      Indicates that the node can provide hosting.
+
+  cna-modeling.capabilities.DataUsage:
+    description: >-
+      The DataUsage capability describes the capability of nodes to use data aggregates or backing data.
+
+  cna-modeling.capabilities.Proxy:
+    description: When included, the Node is able to act as a proxy. This covers all communication to the endpoints of the proxied component.
+    properties:
+      load_balancing:
+        description: Flag whether the proxy functionality includes load balancing
+        type: boolean
+        default: false
+
+  cna-modeling.capabilities.AdressResolution:
+    description: When included, the Node is able to provide address resolution, meaning that symbolic names can be translated into specific IP adresses
+    properties:
+      address_resolution_kind:
+        description: If address resolution is provided, state the kind here, otherwise leave as 'none'
+        type: string
+        validation: { $valid_values: [ $value, [ "none", "discovery", "DNS", "other" ]]}
+        default: none
+    
+  cna-modeling.capabilities.Authentication:
+    description: When included, the Node is able to provide authentication services.
+
+  cna-modeling.capabilities.Linkable:
+    description: >-
+      A node type that includes the Linkable capability indicates that it can be pointed to by a LinksTo relationship type.
+    

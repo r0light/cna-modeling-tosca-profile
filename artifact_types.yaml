@@ -1,0 +1,176 @@
+tosca_definitions_version: tosca_2_0
+
+metadata:
+  template_name: artifact_types.yaml
+  template_author: Distributed Systems Group
+  template_version: 0.6
+
+artifact_types:
+
+  CNA.Artifact:
+    description: The root artifact type for artifacts used in the cna modeling application
+    properties:
+      provider_specific:
+        type: boolean
+        description: "Whether this artifact is (cloud) provider-specific or not."
+        required: true
+        default: false
+      based_on_standard:
+        type: text
+        description: If the artifact is based on a standard, specify it here.
+        required: true
+        validation: { $valid_values: [ $value, ["none", "OCI", "OpenAPI", "other"]]}
+        default: "none"
+      self_contained:
+        type: boolean
+        description: "Whether this artifact is self-contained or not, that means whether it needs additional resources explicitly added to it to be used."
+        required: true
+        default: false
+
+  Kubernetes.Resource:
+    derived_from: CNA.Artifact
+    description: >
+      A Kubernetes resource (like Deployment, Service, etc) which is described in a file
+    file_ext: [ yaml, yml ]
+
+  Kubernetes.Resource.Service:
+    derived_from: Kubernetes.Resource
+    description: >
+      A Kubernetes Service Resource
+    file_ext: [ yaml, yml ]
+
+  Kubernetes.Resource.Deployment:
+    derived_from: Kubernetes.Resource
+    description: >
+      A Kubernetes Deployment Resource
+    file_ext: [ yaml, yml ]
+
+  Implementation:
+    description: >
+      A generic implementation artifact
+    derived_from: CNA.Artifact
+
+  Implementation.Bash:
+    description: >
+      Script artifact for the Unix Bash shell.
+    derived_from: Implementation
+    mime_type: application/x-sh
+    file_ext: [ sh ]
+
+  Implementation.Python:
+    description: >
+      Artifact for the interpreted Python language.
+    derived_from: Implementation
+    mime_type: application/x-python
+    file_ext: [ py ]
+
+  Implementation.Java:
+    derived_from: Implementation
+    description: >
+      Artifact type for a Java archive which might be executable
+    file_ext: [ jar ]
+
+  Implementation.JavaScript:
+    derived_from: Implementation
+    description: >
+      Artifact type for a JavaScript implementation
+    file_ext: [ js ]
+
+  Image.Container:
+    derived_from: CNA.Artifact
+    description: >
+      Artifact type for a Container Image
+
+  Image.Container.OCI:
+    derived_from: CNA.Artifact
+    description: >
+      Artifact type for a OCI (Open Container Initiative)-compliant Container Image 
+    properties:
+      based_on_standard: "OCI"
+
+  Image.VM:
+    derived_from: CNA.Artifact
+    description: >
+      Artifact type for a Virtual Machine (VM) Image
+    
+  Terraform.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by Terraform to set up components or infrastructure.
+    file_ext: [ tf, tf.json ] 
+
+  Pulumi.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by Pulumi to set up components or infrastructure.
+
+  Ansible.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by Ansible to set up components or infrastructure.
+
+  Chef.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by Chef to set up components or infrastructure.
+
+  Puppet.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by Puppet to set up components or infrastructure.
+
+  CloudFormation.Script:
+    derived_from: CNA.Artifact
+    description: A configuration file which can be used by AWS tools to set up components or infrastructure.
+    file_ext: [ yaml, yml, json ]
+
+  AWS.Resource:
+    derived_from: CNA.Artifact
+    description: An abstract type for resources created in the AWS cloud.
+    properties:
+      provider_specific: true
+
+  AWS.EKS.Cluster:
+    derived_from: AWS.Resource
+    description: An AWS EKS Cluster
+
+  AWS.EC2.Instance:
+    derived_from: AWS.Resource
+    description: An AWS EC2 Instance
+
+  AWS.EC2.LoadBalancer:
+    derived_from: AWS.Resource
+    description: An AWS EC2 LoadBalancer
+
+  AWS.EC2.NodeGroup:
+    derived_from: AWS.Resource
+    description: An AWS EC2 NodeGroup
+
+  AWS.Beanstalk.Application:
+    derived_from: AWS.Resource
+    description: An AWS Beanstalk application
+
+  AWS.RDS.Instance:
+    derived_from: AWS.Resource
+    description: An AWS RDS instance
+
+  Azure.Resource:
+    derived_from: CNA.Artifact
+    description: An abstract type for resources created in the Microsoft Azure Cloud.
+
+  Azure.ResourceManagerTemplate:
+    derived_from: CNA.Artifact
+    description: An artifact type for Azure Resource Manager (ARM) templates
+
+  GCP.Resource:
+    derived_from: CNA.Artifact
+    description: An abstract type for resources created in the Google Cloud Platform.
+
+  OpenAPI:
+    derived_from: CNA.Artifact
+    description: Artifact type for OpenAPI-based service interface description documents
+    properties:
+        based_on_standard: "OpenAPI"
+
+  Spring.CloudContract:
+    derived_from: CNA.Artifact
+    description: Artifact type for Spring Cloud contracts for consumer-driven contract testing of APIs
+
+  Pact.Contract:
+    derived_from: CNA.Artifact
+    description: Artifact type for Pact contracts for consumer-driven contract testing of APIs
