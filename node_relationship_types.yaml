@@ -161,6 +161,7 @@ node_types:
         type: boolean
         description: A component is managed if it is exclusively operated by someone else, e.g. a cloud provider and the source code of the component instance is inaccessible. If the source code of a component can be changed by yourself, the component is not managed.
         required: true
+        default: false
       software_type:
         type: string
         description: The type of the software in the sense of who developed it. If it is a self-written component use "custom", if it is an existing open-source solution which is not customized (apart from configuration) use "open-source". If it is licensed proprietary software, use "proprietary".
@@ -704,4 +705,3 @@ node_types:
           - cna-modeling.entities.StorageBackingService
           - cna-modeling.entities.BrokerBackingService
           - cna-modeling.entities.Infrastructure
-          
